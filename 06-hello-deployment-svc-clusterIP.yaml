@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: hello
+  template:
+    metadata:
+      labels: ## es un tipo de etiqueta para para identificar el deployment 
+        role: hello
+    spec:
+      containers:
+      - name: hello
+        image: gcr.io/google-samples/hello-app:1.0
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service ## es un servio que va a esponer el deployment
+metadata:
+  name: hello ## nombre del servicio
+spec:
+  ports:
+  - port: 8080 ## número del puerto por dónde va a quedar expuesto el servicio 
+    targetPort: 8080 ## número del puerto al que le va a puntar el servico ->> al deployment
+  selector: ## con esta propiedad asociamos el deployment con el servicio 
+    role: hello ## nombre del deployment con el que se va a sociar 
