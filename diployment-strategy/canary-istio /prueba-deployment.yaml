@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prueba-deployment 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prueba 
+      pod: prueba-pod       
+  template:
+    metadata:
+      labels:
+        app: prueba
+        pod: prueba-pod        
+    spec:
+      containers:
+        - name: prueba-container
+          image: nginx:1.19-alpine
+          ports:
+            - containerPort: 80
